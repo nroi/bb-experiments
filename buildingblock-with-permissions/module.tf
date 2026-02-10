@@ -35,7 +35,7 @@ resource "meshstack_project" "example" {
     display_name              = "My Project ${var.project_identifier}"
     # TODO perhaps this shouldn't be hardcoded? but we also can't just leave it empty, because tags are required in our dev environment.
     tags = {
-      environment     = ["qa"]
+      environment     = ["dev"]
       confidentiality = ["Internal"]
     }
   }
