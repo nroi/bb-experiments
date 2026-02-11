@@ -15,6 +15,16 @@ variable "project_identifier" {
   description = "The identifier of the meshStack project to be created."
 }
 
+variable "project_tag_environment" {
+  type        = string
+  description = "The tag value for the project's environment"
+}
+
+variable "project_tag_confidentiality" {
+  type        = string
+  description = "The tag value for the project's confidentiality"
+}
+
 variable "workspace_identifier" {
   type        = string
   description = "The identifier of the existing meshStack workspace."
@@ -33,10 +43,9 @@ resource "meshstack_project" "example" {
   spec = {
     payment_method_identifier = var.paymentmethod_identifier
     display_name              = "My Project ${var.project_identifier}"
-    # TODO perhaps this shouldn't be hardcoded? but we also can't just leave it empty, because tags are required in our dev environment.
     tags = {
-      environment     = ["dev"]
-      confidentiality = ["Internal"]
+      environment     = [var.project_tag_environment]
+      confidentiality = [var.project_tag_confidentiality]
     }
   }
 }
