@@ -17,12 +17,12 @@ variable "project_identifier" {
 
 variable "workspace_identifier" {
   type        = string
-  description = "The identifier of the meshStack workspace."
+  description = "The identifier of the existing meshStack workspace."
 }
 
 variable "paymentmethod_identifier" {
   type        = string
-  description = "The identifier of the meshStack payment method."
+  description = "The identifier of the existing meshStack payment method."
 }
 
 resource "meshstack_project" "example" {
