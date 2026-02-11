@@ -47,3 +47,7 @@ resource "meshstack_tenant" "sr_global" {
     # landing_zone_identifier is optional for SERVICEREGISTRY platform type
   }
 }
+
+output "project_created_on" {
+  value = meshstack_project.example.metadata.created_on
+}
