@@ -16,6 +16,11 @@ variable "project_identifier" {
   description = "The identifier of the meshStack project to be created."
 }
 
+variable "location_identifier" {
+  type        = string
+  description = "The identifier of the meshStack location to be created."
+}
+
 variable "project_tags" {
   type        = map(list(string))
   description = "The tag value for the project's environment"
@@ -54,3 +59,16 @@ resource "meshstack_tenant" "this" {
     # landing_zone_identifier is optional for SERVICEREGISTRY platform type
   }
 }
+
+resource "meshstack_location" "this" {
+  metadata = {
+    name = var.location_identifier
+    owned_by_workspace  = meshstack_project.this.metadata.owned_by_workspace
+  }
+
+  spec = {
+    display_name = var.location_identifier
+    description  = var.location_identifier
+  }
+}
+
