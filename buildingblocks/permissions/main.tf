@@ -21,6 +21,11 @@ variable "location_identifier" {
   description = "The identifier of the meshStack location to be created."
 }
 
+variable "platform_type_identifier" {
+  type        = string
+  description = "The identifier of the meshStack platform type to be created."
+}
+
 variable "project_tags" {
   type        = map(list(string))
   description = "The tag value for the project's environment"
@@ -62,13 +67,25 @@ resource "meshstack_tenant" "this" {
 
 resource "meshstack_location" "this" {
   metadata = {
-    name = var.location_identifier
-    owned_by_workspace  = meshstack_project.this.metadata.owned_by_workspace
+    name               = var.location_identifier
+    owned_by_workspace = var.workspace_identifier
   }
 
   spec = {
     display_name = var.location_identifier
     description  = var.location_identifier
+  }
+}
+
+resource "meshstack_platform_type" "this" {
+  metadata = {
+    name               = var.platform_type_identifier
+    owned_by_workspace = var.workspace_identifier
+  }
+
+  spec = {
+    display_name = var.platform_type_identifier
+    icon         = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciLz4="
   }
 }
 
