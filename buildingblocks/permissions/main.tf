@@ -26,6 +26,11 @@ variable "platform_type_identifier" {
   description = "The identifier of the meshStack platform type to be created."
 }
 
+variable "platform_identifier" {
+  type        = string
+  description = "The identifier of the meshStack platform to be created."
+}
+
 variable "project_tags" {
   type        = map(list(string))
   description = "The tag value for the project's environment"
@@ -86,6 +91,42 @@ resource "meshstack_platform_type" "this" {
   spec = {
     display_name = var.platform_type_identifier
     icon         = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciLz4="
+  }
+}
+
+resource "meshstack_platform" "this" {
+  metadata = {
+    name               = var.platform_identifier
+    owned_by_workspace = var.workspace_identifier
+  }
+
+  spec = {
+    display_name      = var.platform_identifier
+    description       = var.platform_identifier
+    endpoint          = "https://api.example.com"
+    documentation_url = "https://docs.example.com"
+
+    location_ref = {
+      name = meshstack_location.this.metadata.name
+    }
+
+    availability = {
+      restriction              = "PUBLIC"
+      publication_state        = "PUBLISHED"
+      restricted_to_workspaces = []
+    }
+
+    quota_definitions = []
+
+    config = {
+      custom = {
+        platform_type_ref = {
+          name = meshstack_platform_type.this.metadata.name
+        }
+      }
+    }
+
+    contributing_workspaces = []
   }
 }
 
