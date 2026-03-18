@@ -11,7 +11,7 @@ provider "meshstack" {
 }
 
 variable "azure_provider_config" {
-  type = map(object(
+  type = map(string(
     {
       client_id = string
       tenant_id = string
